@@ -6,6 +6,7 @@ import gui.panels.MotionPanel;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.geom.RoundRectangle2D;
 
 import static java.awt.GraphicsDevice.WindowTranslucency.*;
@@ -26,8 +27,8 @@ public class MainFrame extends JFrame {
 		this.pack();
 		this.setShape(new RoundRectangle2D.Double
 				(0, 0, this.getWidth()-1, this.getHeight()-1, 20, 20));
-		
-		
+		Image image = new ImageIcon(getClass().getClassLoader().getResource("resources/spotifynano.png")).getImage();
+		this.setIconImage(image);
 		this.setTitle("SpotifyNano");
 		this.setVisible(true);
 	}
