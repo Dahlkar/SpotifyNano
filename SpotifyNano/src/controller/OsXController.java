@@ -8,37 +8,43 @@ public class OsXController extends Controller {
 
 	@Override
 	public void playpause() {
-		this.execCommand("osascript -e 'tell application \"Spotify\" to playpause'");
+		String[] command = {"osascript", "-e", "tell application \"Spotify\" to playpause"};
+		this.execCommand(command);
 	}
 
 	@Override
 	public void next() {
-		this.execCommand("osascript -e 'tell application \"Spotify\" to next track'");
+		String[] command = {"osascript", "-e", "tell application \"Spotify\" to next track"};
+		this.execCommand(command);
 	}
 
 	@Override
 	public void previous() {
-		this.execCommand("osascript -e 'tell application \"Spotify\" to previous track'");
+		String[] command = {"osascript", "-e", "tell application \"Spotify\" to previous track"};
+		this.execCommand(command);
 	}
 
 	@Override
 	public String getCurrentTrack() {
-		return this.execCommandOutput("osascript -e 'tell application \"Spotify\" to name of current track'");
+		String[] command = {"osascript", "-e", "tell application \"Spotify\" to name of current track"};
+		return this.execCommandOutput(command);
 	}
 
 	@Override
 	public String getCurrentArtist() {	
-		return this.execCommandOutput("osascript -e 'tell application \"Spotify\" to artist of current track'");
+		String[] command = {"osascript", "-e", "tell application \"Spotify\" to artist of current track"};
+		return this.execCommandOutput(command);
 	}
 
 	@Override
 	public boolean isPlaying() {
-		String state = this.execCommandOutput("osascript -e 'tell application \"Spotify\" to player sate'");
+		String[] command = {"osascript", "-e", "tell application \"Spotify\" to player state"};
+		String state = this.execCommandOutput(command);
 		if(state.equals("playing")) return true;
 		return false;
 	}
 
-	private String execCommandOutput(String command) {
+	private String execCommandOutput(String[] command) {
 		StringBuffer output = new StringBuffer();
 		 
 		Process p;
@@ -47,24 +53,23 @@ public class OsXController extends Controller {
 			p.waitFor();
 			BufferedReader reader = 
                             new BufferedReader(new InputStreamReader(p.getInputStream()));
- 
-                        String line = "";			
-			while ((line = reader.readLine())!= null) {
-				output.append(line + "\n");
-			}
+			BufferedReader readerErr = 
+                    new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                        String s = null;
+                        while ((s = reader.readLine()) != null) {
+                        	output.append(s);
+                        }
  
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
- 
 		return output.toString();
 	}
 	
-	private void execCommand(String command) {
+	private void execCommand(String[] command) {
 		try {
 			Runtime.getRuntime().exec(command);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

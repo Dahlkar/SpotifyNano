@@ -11,10 +11,8 @@ public class SpotifyNano {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {	
 		String osName = System.getProperty("os.name");
-		
 		if(osName.equals("Windows 7")) {
 			WinDef.HWND windowHandle = MyUser32.INSTANCE.FindWindow("SpotifyMainWindow", null);
 			if(windowHandle == null) {
@@ -26,6 +24,7 @@ public class SpotifyNano {
 		} else {
 			Controller controller = new OsXController();
 			MainFrame frame = new MainFrame(controller);
+			
 		}
 	}
 
