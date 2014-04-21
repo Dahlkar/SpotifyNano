@@ -1,2 +1,7 @@
 /gui
 /resources
+/RemotifyClient.class
+/RemotifyServer.class
+/CurrentlyPlayingThread.class
+/HandlerThread.class
+/PlayingThread.class
